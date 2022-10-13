@@ -16,7 +16,7 @@ def get_points(indy, num_of_points = 2) :
 		while (button.wait_for_button_input(indy) != 1) :
 			pass
 		temp_position = indy.get_task_pos()
-		temp_position[3:3] = [0, 180, 0]
+		temp_position[2:4] = [TOOL_PLACE_HEIGHT ,0, 180, 0]
 		point_list.append(temp_position)
 		led.led_blink(indy, 3)
 	print(point_list)
@@ -57,6 +57,7 @@ def update_tool_orientation(indy, dir_vec) :
 
 	joint6_angle = curr_joint_status[5];
 	joint6_angle -= TOOL_ROT_OFFSET + angle_with_y
+	# joint6_angle %= 360
 	while (joint6_angle < -215) :
 		joint6_angle += 360
 	while (joint6_angle > 215) :

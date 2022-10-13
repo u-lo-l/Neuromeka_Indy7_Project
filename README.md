@@ -36,7 +36,7 @@
     - place하기 위한 접근위치를 구하고 그 위치로 이동시킨다..
         - 경로 상의 모든  position들은 rpy가 (0, 180, 0) 이기 때문에  end_effector의 z 축은 base의 z 과 방향이 반대고,  end_effector의 y축은 base의 y축과 방향이 같다.
         - tool은 end_effector와 z축은 방향이 같지만, z축방향으로 +22.5(deg) 회전한 좌표계를갖는다.
-            - 지금 indy7이 회전을 쿼터니언으로 나타내지 않고 rpy로 나타내고 있는데, 이 때 [ZYX_Euler_angle](https://edward0im.github.io/engineering/2019/11/12/euler-angle/)을 사용한다는 보장이 없으므로, 이 단계에서 tool 좌표계와 end_effector의 좌표계를 일치시켜준다.  joint6를 -22.5(deg)만큼 회전시켜주면 좌표계가 일치하게 된다.
+            - 지금 indy7이 회전을 쿼터니언으로 나타내지 않고 rpy로 나타내고 있는데, 이 때 [ZYX_Euler_angle](https://edward0im.github.io/engineering/2019/11/12/euler-angle/)을 사용한다는 보장이 없으므로, 이 단계에서 tool 좌표계와 end_effector의 좌표계를 일치시켜준다.추후에 확인 및 보완이 필요하다. joint6를 -22.5(deg)만큼 회전시켜주면 좌표계가 일치하게 된다.
         - tool의 y축을 도미노 경로 진행방향과 일치시켜준다.
             - 도미노 진행 방향을 구한다.
                 - 현재 점, 이전 점, 다음 점을 이용하여 진행방향을 구한다.

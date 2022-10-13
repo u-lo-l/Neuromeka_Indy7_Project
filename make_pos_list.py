@@ -18,7 +18,6 @@ def make_line_pos_list(np_pos1, np_pos2) :
 	poslst = []
 	for i in range(count) :
 		np_pos1 += (dir_vec_stride * i)
-		np_pos1[2] = TOOL_PLACE_HEIGHT
 		poslst.append(np_pos1.tolist())
 	return (poslst)
 
