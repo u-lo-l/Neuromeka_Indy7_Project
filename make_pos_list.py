@@ -23,10 +23,14 @@ def make_line_pos_list(np_pos1, np_pos2) :
 	return (poslst)
 
 def make_multiline_pos_list(pos_list) :
+	print("make multiline")
 	count = len(pos_list)
+	print("count : ", count)
 	multiline_pos_list = []
 	for i in range(1, count) :
-		templist = make_line_pos_list(pos_list[i - 1], pos_list[i])
+		print("i : ", i)
+		templist = make_line_pos_list(np.array(pos_list[i - 1]), np.array(pos_list[i]))
+		print(templist)
 		if len(multiline_pos_list) != 0 :
 			del(templist[0])
 		multiline_pos_list.extend(templist)
