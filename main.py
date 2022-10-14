@@ -11,24 +11,16 @@ try :
 	indy.connect()
 	print("CONNECTED SUCCESSFULLY")
 	print("Vairalble Setting")
+	indy.set_task_vel_level(5)
+	indy.set_joint_vel_level(5)
 	led.led_blink(indy, 2)
 	led.led_on(indy)
 	indy.go_home()
 	
-	print("Indy ready. Put the numbers of vertices to start", end = " ")
-	num_of_vertices = int(input())
-	print(num_of_vertices)
-	if num_of_vertices < 2 :
-		raise ValueError
-	vertices = jenga.get_points(indy, num_of_vertices)
+	input("Indy ready. ENTER to go next step")
+	vertices = jenga.get_points(indy)
 
-	# start = np.array(vertices[0]);
-	# end = np.array(vertices[1]);
-	# print("start : ", start)
-	# print(" end  : ", end)
-
-	print("Press ENTER to go next step")
-	input()
+	input("Press ENTER to go next step")
 	indy.go_home()
 	# position_list = jenga.make_line_pos_list(start, end)
 	position_list = jenga.make_multiline_pos_list(vertices)
@@ -37,20 +29,20 @@ try :
 	for l in position_list :
 		print(l)
 	
-	print("Press ENTER to go next step")
-	input()
+	input("Press ENTER to go next step")
 	
 	jenga.make_dominos(indy, position_list)
 
-	print("Press ENTER to go next step")
-	input()
+	input("Press ENTER to go next step")
 
 	jenga.play_domino(indy, position_list)
-	indy.go_home()
 
 except :
 	print("Erro Occurs")
 
+indy.set_task_vel_level(3)
+indy.set_joint_vel_level(3)
+indy.go_home()
 led.led_off(indy)
 indy.disconnect()
 print("DISCONNECTED")	

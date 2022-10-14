@@ -17,7 +17,7 @@ def make_line_pos_list(np_pos1, np_pos2) :
 	dir_vec = dir_vec / count
 	poslst = []
 	temp = np_pos1
-	for i in range(count) :
+	for i in range(count + 1) :
 		temp = np_pos1 + (dir_vec * i)
 		poslst.append(temp.tolist())
 	return (poslst)
