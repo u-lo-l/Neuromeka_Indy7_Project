@@ -37,26 +37,28 @@ def pick_jenga(indy) :
 
 def get_gradient_dir(prev_pos, curr_pos, next_pos) :
 	if (prev_pos is None) :
-		grad_dir = next_pos - curr_pos
+		grad_dir = np.array(next_pos) - np.array(curr_pos)
 	elif (next_pos is None) :
-		grad_dir = curr_pos - prev_pos
+		grad_dir = np.array(curr_pos) - np.array(prev_pos)
 	else :
-		grad_dir = next_pos - prev_pos
+		grad_dir = np.array(next_pos) - np.array(prev_pos)
 	return  grad_dir / al.norm(grad_dir)
 
 def update_tool_orientation(indy, dir_vec) :
 	# print("ORIENTATION")
 	curr_joint_status = indy.get_joint_pos();
-	# print ("curr joint", curr_joint_status)
  
 	line_length = al.norm(dir_vec[0:3])
 	angle_with_y = np.dot(np.array([0.0,1.0,0.0]), dir_vec[0:3])
+	print("dir : ", dir_vec[0:3])
 	angle_with_y = angle_with_y / line_length
+	print("cos theta : ", angle_with_y)
 	angle_with_y = math.acos(angle_with_y) * 180 / math.pi
-	# print("angle_with_y : ", angle_with_y)
+	print("angle_with_y : ", angle_with_y)
 
 	joint6_angle = curr_joint_status[5];
-	joint6_angle -= TOOL_ROT_OFFSET + angle_with_y
+	print ("curr joint", curr_joint_status[5])
+	joint6_angle += angle_with_y - TOOL_ROT_OFFSET
 	# joint6_angle %= 360
 	while (joint6_angle < -215) :
 		joint6_angle += 360
@@ -69,10 +71,13 @@ def update_tool_orientation(indy, dir_vec) :
 	return (indy.get_task_pos())
 
 def put_jenga(indy, target_position, dir_vec) :
-	# print("Put Jenga")
+	print("Put Jenga")
 	above_position = [x + y for x,y in zip(target_position, PLACE_OFFSET)]
+	print("Put Jenga")
 	indy.task_move_to(above_position)
+	print("Put Jenga")
 	indy.wait_for_move_finish()
+	print("Put Jenga")
 	above_position = update_tool_orientation(indy, dir_vec)
 	target_position = [x - y for x,y in zip(above_position, PLACE_OFFSET)]
 	indy.task_move_to(target_position)
@@ -85,7 +90,7 @@ def put_jenga(indy, target_position, dir_vec) :
 def play_domino(indy, pos_list) :
 	start_point = pos_list[-1]
 	last_jenga = pos_list[-2]
-	start_point[3:3] = last_jenga[3:3]
+	start_point[3:6] = last_jenga[3:6]
 	start_point[2] += PLACE_OFFSET
 	indy.task_move_to(start_point)
 	indy.wait_for_task_finish()

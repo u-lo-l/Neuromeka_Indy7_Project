@@ -14,11 +14,12 @@ def make_line_pos_list(np_pos1, np_pos2) :
 	if (count <= 1) :
 		print("path too short. quit program")
 		exit()
-	dir_vec_stride = dir_vec / count
+	dir_vec = dir_vec / count
 	poslst = []
+	temp = np_pos1
 	for i in range(count) :
-		np_pos1 += (dir_vec_stride * i)
-		poslst.append(np_pos1.tolist())
+		temp = np_pos1 + (dir_vec * i)
+		poslst.append(temp.tolist())
 	return (poslst)
 
 def make_multiline_pos_list(pos_list) :
