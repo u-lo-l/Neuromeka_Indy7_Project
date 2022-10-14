@@ -33,5 +33,8 @@ def make_multiline_pos_list(pos_list) :
 		print(templist)
 		if len(multiline_pos_list) != 0 :
 			del(templist[0])
+			temp = np.array(multiline_pos_list[-1]) + np.array(templist[0])
+			temp /= 2
+			templist[0] = temp.tolist()
 		multiline_pos_list.extend(templist)
 	return (multiline_pos_list)
