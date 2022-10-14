@@ -1,6 +1,3 @@
-# Neuromeka_Indy7_Project
-2022 Seoul Robot Academy Project with Neuromeka Indy7 (Making Jenga Domino)
-
 # JengaDomino
 
 - ***step0 : 상수 정의***
@@ -28,15 +25,19 @@
             - 0,+-180,0  혹은 +-180,0,0으로 수정해도 된다.
     - 위의 과정을 2회 반복한다.
 - ***step3 : 경로 생성***
-    - start point와 end_point를 빼면 직선의 길이를 구할 수 있고, STRIDE로 나누면 몇 개의 젠가가 사용될 지 구할 수 있다.
-    - [starat_point, end_point] 범위에서 STRIDE간격으로 점들을 새로운 리스트에 저장하여 반환한다.
+    - ~~start point와 end_point를 빼면 직선의 길이를 구할 수 있고, STRIDE로 나누면 몇 개의 젠가가 사용될 지 구할 수 있다.~~
+    - ~~[starat_point, end_point] 범위에서 STRIDE간격으로 점들을 새로운 리스트에 저장하여 반환한다~~
+    - N개의 경유점을 받으면 N-1개의 직선을 생성한다.
+        - 직선과 직선이 만나는 곳에서 중복되는 점이 존재하므로, 새로 생성되는 점 리스트에서 첫 요소를 삭제한다.
+        - 직선이 꺾이는 위치(새 리스트의 첫 요소)를 해당 위치의 앞 뒤 위치의 평균으로 대채한다.
+        - 꺾이는 위치의 앞, 뒤 두 위치에 대해서도 각 위치의 앞 뒤 위치의 평균으로 대체하여 경로가 꺾이는 부분을 보정한다.
 - ***step4 : pick***
     - step 0에서 설정한 위치 정보를 이용하여 젠가를 잡는다.
 - ***step5 : place***
     - place하기 위한 접근위치를 구하고 그 위치로 이동시킨다..
         - 경로 상의 모든  position들은 rpy가 (0, 180, 0) 이기 때문에  end_effector의 z 축은 base의 z 과 방향이 반대고,  end_effector의 y축은 base의 y축과 방향이 같다.
         - tool은 end_effector와 z축은 방향이 같지만, z축방향으로 +22.5(deg) 회전한 좌표계를갖는다.
-            - 지금 indy7이 회전을 쿼터니언으로 나타내지 않고 rpy로 나타내고 있는데, 이 때 [ZYX_Euler_angle](https://edward0im.github.io/engineering/2019/11/12/euler-angle/)을 사용한다는 보장이 없으므로, 이 단계에서 tool 좌표계와 end_effector의 좌표계를 일치시켜준다.추후에 확인 및 보완이 필요하다. joint6를 -22.5(deg)만큼 회전시켜주면 좌표계가 일치하게 된다.
+            - 지금 indy7이 회전을 쿼터니언으로 나타내지 않고 rpy로 나타내고 있는데, 이 때 [ZYX_Euler_angle](https://edward0im.github.io/engineering/2019/11/12/euler-angle/)을 사용한다는 보장이 없으므로, 이 단계에서 tool 좌표계와 end_effector의 좌표계를 일치시켜준다. joint6를 -22.5(deg)만큼 회전시켜주면 좌표계가 일치하게 된다.
         - tool의 y축을 도미노 경로 진행방향과 일치시켜준다.
             - 도미노 진행 방향을 구한다.
                 - 현재 점, 이전 점, 다음 점을 이용하여 진행방향을 구한다.
